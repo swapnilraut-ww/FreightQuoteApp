@@ -1,0 +1,48 @@
+﻿@{
+       
+       var links = new[] { 
+       new {Id=1,LinkText="Vendor",ActionName="List",ControllerName="Vendor",Icon="fa fa-user",ParentId=0,IsSubMenu=false,AllowedRoles="SystemAdmin,CustAdmin"},
+       new {Id=2,LinkText="Quote Summary",ActionName="List",ControllerName="Quote",Icon="fa fa-user",ParentId=0,IsSubMenu=false,AllowedRoles="SystemAdmin,CustAdmin"},
+    };
+    var menues = from item in links                
+                 select item;
+
+    string actionname = ViewContext.RouteData.GetRequiredString("action");
+    string controllername = ViewContext.RouteData.GetRequiredString("controller");
+    var activeTabId = menues.Where(x => x.ActionName == @actionname && x.ControllerName == @controllername).FirstOrDefault() != null ? menues.Where(x => x.ActionName == @actionname && x.ControllerName == @controllername).FirstOrDefault().ParentId : 0;
+                 
+ }
+<input type="hidden" id="actMenId" value="@activeTabId" />
+<ul id="lftmenu" class="sidebar-menu">
+    @foreach (var menu in menues.Where(x=>x.ParentId==0))
+    { 
+        if(!menu.IsSubMenu)
+        {
+         <li class="active">
+         <a href="@Url.Action(menu.ActionName, menu.ControllerName)">
+            <i class="@menu.Icon"></i><span>@menu.LinkText</span>
+             </a>  </li>
+        }
+         else{
+             <li class="treeview" >
+                 <a href="#" id="@menu.Id">
+                     <i class="@menu.Icon"></i>
+                     <span>@menu.LinkText</span>
+                     <i class="fa fa-angle-left pull-right"></i>
+                 </a>
+                  <ul class="treeview-menu">
+                      @foreach(var submenu in @menues.Where(x=>x.ParentId==menu.Id).ToList())
+                      {
+                          <li class="active">
+                          <a href="@Url.Action(submenu.ActionName, submenu.ControllerName)">
+                          <i class="@submenu.Icon"></i>
+                          <span>@submenu.LinkText</span>
+                         </a>
+                          </li>
+                      }
+                       </ul>
+                 </li>
+
+          }
+    }
+</ul>

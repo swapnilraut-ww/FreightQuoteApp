@@ -1,0 +1,26 @@
+﻿@{
+    ViewBag.Title = "Vendor List";
+}
+@section scripts{
+    <script>
+        var vendor = {
+            vendorList: '@Url.Action("GetVendorList", "Vendor")',
+    }
+    </script>
+
+    <script src="~/Scripts/CustomJs/VendorList.js"></script>
+}
+<div class='row'>
+    <div class='col-md-12'>
+        <div class='box box-info'>
+            <div class='box-body pad' style="min-height: 400px;">              
+                <div class="row">
+                    <div class="col-xs-12">
+                        <div id="divVendorList">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

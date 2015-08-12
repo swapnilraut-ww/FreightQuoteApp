@@ -1,0 +1,32 @@
+﻿@model FreightQuote.Data.User
+    @{
+        Layout = "~/Views/Shared/_LoginLayout.cshtml";
+    }
+    <div id="container_demo">
+        <div id="wrapper">
+            <div id="login" class="animate form">
+                @using (Html.BeginForm())
+                {
+                    <h1>Log in</h1>
+                    <p>
+                        @Html.ValidationSummary()
+                    </p>
+                    <p>
+                        <label for="username" class="uname" data-icon="u">User Name</label>
+                        @Html.TextBoxFor(x => x.UserName, new { @required = "required", @placeholder = "username" })
+                    </p>
+                    <p>
+                        <label for="password" class="youpasswd" data-icon="p">Password </label>
+                        @Html.PasswordFor(x => x.Password, new { @required = "required", @placeholder = "password" })
+                    </p>
+                    <p class="keeplogin">
+                        <input type="checkbox" name="loginkeeping" id="loginkeeping" value="loginkeeping" />
+                        <label for="loginkeeping">Keep me logged in</label>
+                    </p>
+                    <p class="login button">
+                        <input type="submit" value="Login" />
+                    </p>
+                }
+            </div>
+        </div>
+    </div> 

@@ -1,0 +1,195 @@
+﻿@model FreightQuote.Data.Quote
+
+@{
+    ViewBag.Title = "Edit Quote";
+}
+<style type="text/css">
+    label {
+        font-weight: normal !important;
+    }
+
+    .k-header {
+        background-color: none !important;
+    }
+</style>
+@using (Html.BeginForm("Edit", "Quote", FormMethod.Post, new { @class = "form-horizontal" }))
+{
+    <div class='row'>
+        <div class='col-md-12'>
+            <div class='box box-info'>
+                <div class='box-body pad' style="min-height: 400px;">
+                    @Html.HiddenFor(x => x.QuoteId)
+                    @Html.HiddenFor(x => x.CreationDate)
+                    @Html.Hidden("InitialReferenceNo", Model.ReferenceNo)
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label class="control-label col-md-4" for="ReferenceNo">Reference No#</label>
+                                <div class="col-md-8">
+                                    @Html.TextBoxFor(x => x.ReferenceNo, new { @class = "form-control", @placeholder = "Reference No#", @title = "Enter Reference No" })
+                                    @Html.ValidationMessageFor(model => model.ReferenceNo)
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label col-md-4" for="PickupLocation">Pickup Location</label>
+                                <div class="col-md-8">
+                                    @Html.TextBoxFor(x => x.PickupLocation, new { @class = "form-control", @placeholder = "Pickup Location", @title = "Enter Pickup Location" })
+                                    @Html.ValidationMessageFor(model => model.PickupLocation)
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label col-md-4" for="DeliveryLocation">Delivery Location</label>
+                                <div class="col-md-8">
+                                    @Html.TextBoxFor(x => x.DeliveryLocation, new { @class = "form-control", @placeholder = "Delivery Location", @title = "Enter Delivery Location" })
+                                    @Html.ValidationMessageFor(model => model.DeliveryLocation)
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label class="control-label col-md-4" for="Status">Status</label>
+                                <div class="col-md-8">
+                                    @Html.DropDownList("Status", ViewData["StatusList"] as IEnumerable<SelectListItem>, "Select Status", new { @class = "form-control" })
+                                    @*@Html.TextBoxFor(x => x.Status, new { @class = "form-control", @placeholder = "Status", @title = "Enter Status" })*@
+                                    @Html.ValidationMessageFor(model => model.Status)
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label col-md-4" for="Status">Vender</label>
+                                <div class="col-md-8">
+                                    @Html.DropDownList("VenderId", ViewData["VenderList"] as IEnumerable<SelectListItem>, "Select Vender", new { @class = "form-control" })
+                                    @*@Html.TextBoxFor(x => x.Status, new { @class = "form-control", @placeholder = "Status", @title = "Enter Status" })*@
+                                    @Html.ValidationMessageFor(model => model.VenderId)
+                                </div>
+                            </div>
+                            @*<div class="form-group">
+                                    <label class="control-label col-md-3" for="Status">Creation Date</label>
+                                    <div class="col-md-9">
+                                        @Html.TextBoxFor(x => x.CreationDate, new { @class = "form-control", @placeholder = "Creation Date", @title = "Enter Creation Date" })
+                                        @Html.ValidationMessageFor(model => model.CreationDate)
+                                    </div>
+                                </div>*@
+                            <div class="form-group">
+                                <label class="control-label col-md-4" for="Status">Ship Date</label>
+                                <div class="col-md-8">
+                                    @*@(Html.Kendo().DatePickerFor(x => x.ShipDate).Events(e => e.Change("startChange")))*@
+                                    @Html.TextBoxFor(x => x.ShipDate, new { @class = "form-control datepicker", @placeholder = "Ship Date", @title = "Ship Date" })
+                                    @Html.ValidationMessageFor(model => model.ShipDate)
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label class="control-label col-md-2" for="ReferenceNo">Description of Goods</label>
+                                <div class="col-md-10">
+                                    @Html.TextAreaFor(x => x.Description, new { @class = "form-control", @placeholder = "Description of Goods", @title = "Enter Description of Goods" })
+                                    @Html.ValidationMessageFor(model => model.Description)
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label col-md-2" for="ReferenceNo">Comments/Notes</label>
+                                <div class="col-md-10">
+                                    @Html.TextAreaFor(x => x.Comments, new { @class = "form-control", @placeholder = "Comments/Notes", @title = "Enter Comments/Notes" })
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+                <div align="center" class="box-footer">
+                    <button type="submit" class="btn btn-primary">Save</button>
+                    <button type="button" class="btn btn-danger btcancel">Cancel</button>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+
+
+@*@using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+
+        <div class="form-horizontal">
+            <h4>Quote</h4>
+            <hr />
+            @Html.ValidationSummary(true)
+
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.ReferenceNo, new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.ReferenceNo)
+                    @Html.ValidationMessageFor(model => model.ReferenceNo)
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.PickupLocation, new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.PickupLocation)
+                    @Html.ValidationMessageFor(model => model.PickupLocation)
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.DeliveryLocation, new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.DeliveryLocation)
+                    @Html.ValidationMessageFor(model => model.DeliveryLocation)
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.ShipDate, new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.ShipDate)
+                    @Html.ValidationMessageFor(model => model.ShipDate)
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.CreationDate, new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.CreationDate)
+                    @Html.ValidationMessageFor(model => model.CreationDate)
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.Status, new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.Status)
+                    @Html.ValidationMessageFor(model => model.Status)
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.Description, new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.Description)
+                    @Html.ValidationMessageFor(model => model.Description)
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.Comments, new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.Comments)
+                    @Html.ValidationMessageFor(model => model.Comments)
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="col-md-offset-2 col-md-10">
+                    <input type="submit" value="Create" class="btn btn-default" />
+                </div>
+            </div>
+        </div>
+    }*@
+
+@*@section Scripts {
+        @Scripts.Render("~/bundles/jqueryval")
+    }*@
