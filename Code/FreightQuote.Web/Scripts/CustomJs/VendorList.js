@@ -16,28 +16,37 @@ $(document).on("click", ".chkALL", function (e) {
     }
 });
 
+$(document).on("click", ".chkVender", function () {
+    $.ajax({
+        type: "get",
+        url: "/Vendor/UpdateVender",
+        data: { venderId: $(this).data("venderid"), IsActive: this.checked },
+        success: function (data) {
+            venderList = data;
+            BindQuoteList("divQuoteList");
+        }
+    });
+});
+
 $(document).on("click", ".btnEdit", function (e) {
     window.location = vendor.editVendor + '?id=' + $(this).attr("id");
 });
 
-$(document).on("click", ".remove", function (e)
-{
+$(document).on("click", ".remove", function (e) {
     var url = vendor.removeVendor + "?Id=" + $(this).attr("id");
     alertify.confirm("are you sure to remove this ?", function (e) {
         if (e) {
             CallAjaxMethod(url, 'Get', "", AfterRemoveVendor);
-        } 
+        }
     });
 });
 
-function AfterRemoveVendor(data)
-{
+function AfterRemoveVendor(data) {
     alertify.success("vendor removed successfully");
     BindVendorList("divVendorList");
-
 }
-function BindVendorList(divId)
-{
+
+function BindVendorList(divId) {
     $("#" + divId).kendoGrid({
         dataSource: {
             type: "json",
@@ -55,9 +64,9 @@ function BindVendorList(divId)
         },
         columns: [
              {
-                 field: "LocationBarcode",
+                 field: "VendorId",
                  headerTemplate: "<input type='checkbox' class='chkALL' />",
-                 template: '<input type="checkbox" id="chk#=VendorId#"  #= IsActive ? "title =Confirmed" : ""#  #= IsActive ? "checked =checked" : "" #   />',
+                 template: '<input data-venderid="#=VendorId#" class="chkVender" type="checkbox" id="chk#=VendorId#"  #= IsActive ? "title =Confirmed" : ""#  #= IsActive ? "checked =checked" : "" #   />',
                  width: 80
              },
             {

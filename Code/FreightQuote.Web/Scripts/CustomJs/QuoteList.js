@@ -88,7 +88,7 @@ function BindQuoteList(divId) {
                 dataType: "json"
             },
             destroy: {
-                url: quote.deleteQuote,
+                url: quote.removeQuote,
                 dataType: "json"
             },
             parameterMap: function (data, operation) {
@@ -104,13 +104,13 @@ function BindQuoteList(divId) {
             model: {
                 id: "QuoteId",
                 fields: {
-                    ReferenceNo: { editable: true, validation: { required: true } },
+                    ReferenceNo: { editable: false },
                     PickupLocation: { editable: true, validation: { required: true } },
                     DeliveryLocation: { editable: true, validation: { required: true } },
                     ShipDate: { editable: true, validation: { required: true }, type: "date", format: "{0:MM/dd/yyyy}" },
                     CreationDate: { editable: false, type: "date", format: "{0:MM/dd/yyyy}" },
                     Description: { editable: true, validation: { required: true } },
-                    Comments: { editable: false },
+                    Comments: { editable: true },
                     VenderName: { editable: true, validation: { required: true } },
                     VenderId: { editable: true, validation: { required: true } },
                     Status: { editable: true, validation: { required: true } },
@@ -120,7 +120,7 @@ function BindQuoteList(divId) {
     });
 
     $("#" + divId).kendoGrid({
-        dataSource: dataSource,      
+        dataSource: dataSource,
         height: 450,
         sortable: true,
         pageable: {
@@ -184,7 +184,7 @@ function BindQuoteList(divId) {
                     input.kendoDropDownList({
                         dataTextField: "Name",
                         dataValueField: "VenderId",
-                        dataSource: venderList                      
+                        dataSource: venderList
                     }).appendTo(container);
                 }
             },
@@ -206,7 +206,7 @@ function BindQuoteList(divId) {
                     }).appendTo(container);
                 }
             },
-            { command: ["edit", "destroy"], title: "&nbsp;", width: "100px" }]
+            { command: [{ name: "edit", text: "", width: "10px" }, { name: "destroy", text: "", width: "10px" }], title: "&nbsp;", width: "80px" }]
         //{
         //    field: "QuoteId",
         //    title: "Edit",
@@ -222,5 +222,5 @@ function BindQuoteList(divId) {
         //    sortable: false
         //}        
     });
-    
+
 }

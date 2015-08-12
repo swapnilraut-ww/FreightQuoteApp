@@ -1,4 +1,5 @@
-﻿using System;
+﻿using FreightQuote.Data;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -31,6 +32,14 @@ namespace FreightQuote.Web.Controllers
                       Email = x.Email,
                       IsActive = x.IsActive
                   }), JsonRequestBehavior.AllowGet);
+        }
+
+        public ActionResult UpdateVender(int venderId, bool IsActive)
+        {
+            Vender vender = db.Venders.Where(x => x.VenderId == venderId).SingleOrDefault();
+            vender.IsActive = IsActive;
+            db.SaveChanges();
+            return Json("");
         }
 	}
 }

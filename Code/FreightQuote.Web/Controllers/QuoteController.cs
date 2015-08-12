@@ -154,12 +154,12 @@ namespace FreightQuote.Web.Controllers
             return RedirectToAction("List");
         }
 
-        public ActionResult Remove(int Id)
+        public ActionResult Remove([DataSourceRequest] DataSourceRequest request, int QuoteId)
         {
-            Quote quote = db.Quotes.Where(x => x.QuoteId == Id).SingleOrDefault();
+            Quote quote = db.Quotes.Where(x => x.QuoteId == QuoteId).SingleOrDefault();
             db.Quotes.Remove(quote);
             db.SaveChanges();
-            return Json(true, JsonRequestBehavior.AllowGet);
+            return Json(ModelState.ToDataSourceResult(), JsonRequestBehavior.AllowGet);
         }
 
         public ActionResult GetVendors()
