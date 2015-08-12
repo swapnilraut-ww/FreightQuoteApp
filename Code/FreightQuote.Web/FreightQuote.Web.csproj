@@ -568,6 +568,7 @@
     <Content Include="Content\fonts\ionicons.woff" />
     <Content Include="Content\kendo\images\kendoui.ttf" />
     <Content Include="Content\kendo\images\kendoui.woff" />
+    <None Include="Properties\PublishProfiles\FreightQuote.pubxml" />
     <None Include="Scripts\jquery-1.8.2.intellisense.js" />
     <Content Include="Scripts\AdminLTE\app.js" />
     <Content Include="Scripts\AdminLTE\dashboard.js" />

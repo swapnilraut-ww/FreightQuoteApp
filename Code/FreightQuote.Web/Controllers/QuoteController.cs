@@ -97,12 +97,15 @@ namespace FreightQuote.Web.Controllers
                     smtp.Port = int.Parse(ConfigurationManager.AppSettings["MailPort"]);
                     smtp.EnableSsl = Convert.ToBoolean(ConfigurationManager.AppSettings["IsSSLEnabled"].ToString());
 
-                    List<Vender> vendorList = db.Venders.Where(x => x.IsActive == true).ToList();
-                    foreach (var item in vendorList)
-                    {
-                        Msg.To.Add(item.Email);
-                        smtp.Send(Msg);
-                    }
+                    //List<Vender> vendorList = db.Venders.Where(x => x.IsActive == true).ToList();
+                    //foreach (var item in vendorList)
+                    //{                        
+                    //    Msg.To.Add(item.Email);
+                    //    smtp.Send(Msg);
+                    //}
+
+                    Msg.To.Add(new MailAddress(ConfigurationManager.AppSettings["ToEmail"]));
+                    smtp.Send(Msg);
 
                     return RedirectToAction("List");
                 }
