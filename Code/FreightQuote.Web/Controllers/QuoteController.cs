@@ -11,6 +11,7 @@ using System.Web;
 using System.Web.Mvc;
 using Kendo.Mvc.Extensions;
 using System.Data.Entity;
+using System.Threading.Tasks;
 namespace FreightQuote.Web.Controllers
 {
     public class QuoteController : BaseController
@@ -48,15 +49,17 @@ namespace FreightQuote.Web.Controllers
         public ActionResult Create()
         {
             ViewData["StatusList"] =
-                new SelectList(new[] { "Open", "Quote Send", "Quote Received", "Shipped", "Completed" }
+                new SelectList(new[] { "Open", "Send", "Received", "Shipped", "Completed" }
                 .Select(x => new { value = x, text = x }),
-                "value", "text");
+                "value", "text", "Open");
 
-            return View();
+            Quote quote = new Quote();
+            quote.ShipDate = System.DateTime.Now;
+            return View(quote);
         }
 
         [HttpPost]
-        public ActionResult Create(Quote quote)
+        public async Task<ActionResult> Create(Quote quote)
         {
             try
             {
@@ -82,7 +85,7 @@ namespace FreightQuote.Web.Controllers
                     StrContent = StrContent.Replace("[ShipDate]", quote.ShipDate.ToShortDateString());
                     StrContent = StrContent.Replace("[Description]", quote.Description);
                     StrContent = StrContent.Replace("[Comments]", quote.Comments);
-                    Msg.Subject = string.Format("Subject – Request Quote – Reference# {0}", quote.ReferenceNo);
+                    Msg.Subject = string.Format("Request Quote – Reference# {0}", quote.ReferenceNo);
                     Msg.Body = StrContent.ToString();
                     Msg.IsBodyHtml = true;
 
@@ -105,7 +108,8 @@ namespace FreightQuote.Web.Controllers
                     //}
 
                     Msg.To.Add(new MailAddress(ConfigurationManager.AppSettings["ToEmail"]));
-                    smtp.Send(Msg);
+                    //smtp.Send(Msg);
+                    await smtp.SendMailAsync(Msg);
 
                     return RedirectToAction("List");
                 }

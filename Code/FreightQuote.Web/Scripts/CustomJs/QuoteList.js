@@ -137,7 +137,7 @@ function BindQuoteList(divId) {
             },
             {
                 field: "PickupLocation",
-                title: "Pick Location",
+                title: "Pickup Location",
                 width: 100,
             },
             {
@@ -176,7 +176,7 @@ function BindQuoteList(divId) {
                 sortable: false,
                 template: "#= venderName(VenderId) #", // the template shows the name corresponding to the VenderId field
                 editor: function (container) { // use a dropdownlist as an editor
-                    var input = $('<input id="VenderId" name="VenderId">');
+                    var input = $('<input id="VenderId" required data-text-field="Name" data-value-field="VenderId" name="VenderId">');
                     // append to the editor container 
                     input.appendTo(container);
 
@@ -184,7 +184,8 @@ function BindQuoteList(divId) {
                     input.kendoDropDownList({
                         dataTextField: "Name",
                         dataValueField: "VenderId",
-                        dataSource: venderList
+                        dataSource: venderList,
+                        optionLabel : "--Select--"
                     }).appendTo(container);
                 }
             },
@@ -192,9 +193,9 @@ function BindQuoteList(divId) {
                 field: "Status",
                 title: "Status",
                 width: 100,
-                template: "#= statusName(Status) #", // the template shows the name corresponding to the VenderId field
+                template: "#= statusName(Status) #", // the template shows the name corresponding to the status field
                 editor: function (container) { // use a dropdownlist as an editor
-                    var input = $('<input id="Status" name="Status">');
+                    var input = $('<input id="Status" required data-text-field="Name" data-value-field="StatusId" name="Status">');
                     // append to the editor container 
                     input.appendTo(container);
 
@@ -202,7 +203,8 @@ function BindQuoteList(divId) {
                     input.kendoDropDownList({
                         dataTextField: "Name",
                         dataValueField: "StatusId",
-                        dataSource: statusList
+                        dataSource: statusList,
+                        optionLabel: "--Select--"
                     }).appendTo(container);
                 }
             },

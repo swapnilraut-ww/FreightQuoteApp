@@ -39,7 +39,7 @@ namespace FreightQuote.Web.Controllers
             Vender vender = db.Venders.Where(x => x.VenderId == venderId).SingleOrDefault();
             vender.IsActive = IsActive;
             db.SaveChanges();
-            return Json("");
+            return Json("", JsonRequestBehavior.AllowGet);
         }
-	}
+    }
 }

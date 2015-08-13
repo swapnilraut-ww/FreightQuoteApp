@@ -37,7 +37,8 @@ namespace FreightQuote.Web
             bundles.Add(new ScriptBundle("~/bundles/core").Include(
                       "~/Scripts/bootstrap.min.js",
                       "~/Scripts/alertify.min.js",
-                      "~/Scripts/CustomJs/Common.js"
+                      "~/Scripts/CustomJs/Common.js",
+                      "~/Scripts/AdminLTE/app.js"
                       ));
 
             // Use the development version of Modernizr to develop with and learn from. Then, when you're

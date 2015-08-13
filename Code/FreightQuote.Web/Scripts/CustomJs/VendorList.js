@@ -22,8 +22,7 @@ $(document).on("click", ".chkVender", function () {
         url: "/Vendor/UpdateVender",
         data: { venderId: $(this).data("venderid"), IsActive: this.checked },
         success: function (data) {
-            venderList = data;
-            BindQuoteList("divQuoteList");
+            BindVendorList("divVendorList");
         }
     });
 });
