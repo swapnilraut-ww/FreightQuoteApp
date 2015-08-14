@@ -79,12 +79,10 @@ namespace FreightQuote.Web.Controllers
                     string StrContent = "";
                     StrContent = readFile;
                     //Here replace the name with [MyName]
-                    StrContent = StrContent.Replace("[Reference]", quote.ReferenceNo);
                     StrContent = StrContent.Replace("[PickUpLocation]", quote.PickupLocation);
                     StrContent = StrContent.Replace("[DeliveryLocation]", quote.DeliveryLocation);
                     StrContent = StrContent.Replace("[ShipDate]", quote.ShipDate.ToShortDateString());
                     StrContent = StrContent.Replace("[Description]", quote.Description);
-                    StrContent = StrContent.Replace("[Comments]", quote.Comments);
                     Msg.Subject = string.Format("Request Quote – Reference# {0}", quote.ReferenceNo);
                     Msg.Body = StrContent.ToString();
                     Msg.IsBodyHtml = true;
@@ -100,12 +98,11 @@ namespace FreightQuote.Web.Controllers
                     smtp.Port = int.Parse(ConfigurationManager.AppSettings["MailPort"]);
                     smtp.EnableSsl = Convert.ToBoolean(ConfigurationManager.AppSettings["IsSSLEnabled"].ToString());
 
-                    //List<Vender> vendorList = db.Venders.Where(x => x.IsActive == true).ToList();
-                    //foreach (var item in vendorList)
-                    //{                        
-                    //    Msg.To.Add(item.Email);
-                    //    smtp.Send(Msg);
-                    //}
+                    List<Vender> vendorList = db.Venders.Where(x => x.IsActive == true).ToList();
+                    foreach (var item in vendorList)
+                    {
+                        Msg.To.Add(item.Email);                        
+                    }
 
                     Msg.To.Add(new MailAddress(ConfigurationManager.AppSettings["ToEmail"]));
                     //smtp.Send(Msg);
